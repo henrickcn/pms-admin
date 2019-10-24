@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "user".
@@ -19,7 +20,7 @@ use Yii;
  * @property string $login_ip 最后登录IP
  * @property int $user_status 用户状态：1：有效用户，2：已禁用，3：已删除
  */
-class User extends \yii\db\ActiveRecord
+class UserBackEnd extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -35,7 +36,7 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required'],
+            [['id','pass_word'], 'required'],
             [['create_time', 'update_time'], 'safe'],
             [['user_status'], 'integer'],
             [['id'], 'string', 'max' => 36],
