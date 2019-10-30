@@ -15,13 +15,12 @@ namespace backend\controllers;
 
 use common\service\UserComService;
 use yii\filters\Cors;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
-use yii\web\Response;
 
 class AuthController extends Controller
 {
     private $_userComService;
+    public $enableCsrfValidation = false;
 
     public function __construct($id, $module, $config = [], UserComService $userComService) {
         $this->_userComService = $userComService;
@@ -30,16 +29,15 @@ class AuthController extends Controller
 
     public function behaviors()
     {
-        return ArrayHelper::merge([
-            [
+        return [
+            'corsFilter' => [
                 'class' => Cors::className(),
                 'cors' => [
-                    //'Origin' => ['http://localhost:1024'],
-                    'Origin' => ['*'],
-                    'Access-Control-Request-Method' => ['*'],
-                    'Access-Control-Allow-Credentials' => true,
-                ],
-            ],
-        ], parent::behaviors());
+                    'Origin' => ['http://www.pms.com'],
+                    'Access-Control-Request-Headers'=>['*'],
+                    'Access-Control-Request-Method' => ['GET', 'POST'],
+                ]
+            ]
+        ];
     }
 }
